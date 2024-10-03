@@ -16,16 +16,7 @@ resource "helm_release" "kube-prometheus-alert" {
   chart      = "kube-prometheus-stack"
   version    = var.chart_version
 
-  # Ingress values
-  values = [
-    templatefile("${path.module}/values.yaml.tpl", {
-      domain_name           = var.domain_name,
-      dash_domain_name      = var.dash_domain_name
-      issuer_name           = var.issuer_name
-      issuer_kind           = var.issuer_kind
-      channel               = var.channel
-    })
-  ]
+  values     = [file("${path.module}/values.yaml")]
 }
 
 #

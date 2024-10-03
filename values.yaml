@@ -3,6 +3,15 @@ additionalPrometheusRulesMap:
     groups:
     - name: rules-cuemby
       rules:
+        #OpenEBS
+        - alert: OpenebsUsedPoolCapacity
+          expr: openebs_used_pool_capacity_percent > 90
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: OpenEBS used pool capacity (instance {{ $labels.instance }})
+            description: "OpenEBS Pool use more than 90% of his capacity\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
         #Host and hardware : node-exporter
         - alert: HostOutOfMemory
           expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 10) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
@@ -114,12 +123,17 @@ prometheus:
           module: [http_2xx]  # Look for a HTTP 200 response.
         static_configs:
           - targets:
-          # Target to probe with https.
-          #- http://example.com:8080 # Target to probe with http on port 8080.
-            - https://grafana.cuemby.io
-            - https://harbor.cuemby.io
-            - https://minio.cuemby.io
-            - https://apiminio.cuemby.io
+            # Target to probe with https.
+            #- http://example.com:8080 # Target to probe with http on port 8080.
+            # - http://prometheus.io    # Target to probe with http.
+            - https://console.dev.cuemby.net
+            - https://walrus.dev.cuemby.net/
+            - https://harbor.dev.cuemby.net/api/
+            - https://harbor.dev.cuemby.net/service/
+            - https://harbor.dev.cuemby.net/v2/
+            - https://harbor.dev.cuemby.net/chartrepo/
+            - https://harbor.dev.cuemby.net/c/
+            - https://harbor.dev.cuemby.net/
         relabel_configs:
           - source_labels: [__address__]
             target_label: __param_target
@@ -171,16 +185,57 @@ prometheus:
     type: ClusterIP
   ingress:
     hosts:
-        - prometheus.${domain_name}
+      - prometheus.core-dev.cuemby.net
     annotations:
-      cert-manager.io/issuer: ${issuer_name}
-      cert-manager.io/issuer-kind: ${issuer_kind}
+      cert-manager.io/issuer: origin-ca-issuer
+      cert-manager.io/issuer-kind: ClusterOriginIssuer
       cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
       external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
-      external-dns.alpha.kubernetes.io/hostname: prometheus.${domain_name}
+      external-dns.alpha.kubernetes.io/hostname: prometheus.core-dev.cuemby.net
     enabled: true
     ingressClassName: nginx
     tls:
       - hosts:
-          - prometheus.${domain_name}
-        secretName: prometheus-${dash_domain_name}
+        - prometheus.core-dev.cuemby.net
+        secretName: prometheus-core-dev-cuemby-net
+alertmanager:
+  enabled: true
+  config:
+    global:
+      resolve_timeout: 10m
+    route:
+      group_by: ['job']
+      group_wait: 5m
+      group_interval: 15m
+      repeat_interval: 1h
+      receiver: 'webhook'
+    receivers:
+    - name: 'webhook'
+      webhook_configs:
+      - url: 'http://prometheus-msteams:2000/alerts'
+        send_resolved: true
+  alertmanagerSpec:
+    configSecret: myalertmanager
+  service:
+    type: ClusterIP
+  ingress:
+    hosts:
+      - alertmanager.core-dev.cuemby.net
+    annotations:
+      cert-manager.io/issuer: origin-ca-issuer
+      cert-manager.io/issuer-kind: ClusterOriginIssuer
+      cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
+      external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
+      external-dns.alpha.kubernetes.io/hostname: alertmanager.core-dev.cuemby.net
+    enabled: true
+    ingressClassName: nginx
+    tls:
+      - hosts:
+        - alertmanager.core-dev.cuemby.net
+        secretName: alertmanager-core-dev-cuemby-net
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeEtcd:
+  enabled: false
