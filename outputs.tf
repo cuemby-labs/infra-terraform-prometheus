@@ -1,5 +1,5 @@
 #
-# Contextual output
+# Walrus Contextual output
 #
 
 output "walrus_project_name" {
@@ -30,13 +30,4 @@ output "walrus_resource_name" {
 output "walrus_resource_id" {
   value       = try(local.context["resource"]["id"], null)
   description = "The id of resource where deployed in Walrus."
-}
-
-#
-# Submodule output
-#
-
-output "submodule" {
-  value       = module.submodule.message
-  description = "The message from submodule."
 }

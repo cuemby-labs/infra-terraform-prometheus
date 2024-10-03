@@ -1,9 +1,37 @@
-locals {
-  context = var.context
+#
+# Prometheus Resources
+#
+
+resource "kubernetes_namespace" "prometheus-alert" {
+  metadata {
+    name = var.namespace_name
+  }
 }
 
-module "submodule" {
-  source = "./modules/submodule"
+resource "helm_release" "kube-prometheus-alert" {
+  name       = var.release_name
+  namespace  = var.namespace_name
 
-  message = "Hello, submodule"
+  repository = "https://prometheus-community.github.io/helm-charts"
+  chart      = "kube-prometheus-stack"
+  version    = var.chart_version
+
+  # Ingress values
+  values = [
+    templatefile("${path.module}/values.yaml.tpl", {
+      domain_name           = var.domain_name,
+      dash_domain_name      = var.dash_domain_name
+      issuer_name           = var.issuer_name
+      issuer_kind           = var.issuer_kind
+      channel               = var.channel
+    })
+  ]
+}
+
+#
+# Walrus information
+#
+
+locals {
+  context = var.context
 }
