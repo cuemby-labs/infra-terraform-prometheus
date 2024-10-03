@@ -184,7 +184,7 @@ prometheus:
       - hosts:
           - prometheus.${domain_name}
         secretName: prometheus-${dash_domain_name}
-alertmanager:
+#alertmanager:
   enabled: true
   config:
     global:
@@ -219,9 +219,9 @@ alertmanager:
       - hosts:
           - alertmanager.${domain_name}
         secretName: alertmanager-${dash_domain_name}
-kubeControllerManager:
+#kubeControllerManager:
   enabled: false
-kubeScheduler:
+#kubeScheduler:
   enabled: false
-kubeEtcd:
+#kubeEtcd:
   enabled: false
