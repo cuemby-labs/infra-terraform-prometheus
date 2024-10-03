@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+  title: OpenAPI schema for template .
+components:
+  schemas:
+    variables:
+      type: object
+      properties:
+        release_name:
+          title: Release Name
+          type: string
+          description: The name of the Helm release.
+          default: prometheus
+          x-walrus-ui:
+            group: Basic
+            order: 1
+        namespace_name:
+          title: Namespace Name
+          type: string
+          description: The namespace where the Helm release will be installed.
+          default: prometheus-system
+          x-walrus-ui:
+            group: Basic
+            order: 2
+        chart_version:
+          title: Chart Version
+          type: string
+          description: The version of the ingress-nginx Helm chart.
+          default: 64.0.0
+          x-walrus-ui:
+            group: Basic
+            order: 3
+        domain_name:
+          title: Domain Name
+          type: string
+          description: domain name for Prometheus, e.g. 'dev.domainname.com'
+          default: dev.domainname.com
+          x-walrus-ui:
+            group: Basic
+            order: 4
+        dash_domain_name:
+          title: Dash Domain Name
+          type: string
+          description: domain name with dash, e.g. 'dev-domainname-com'
+          default: dev-domainname-com
+          x-walrus-ui:
+            group: Basic
+            order: 5
+        issuer_name:
+          title: Issuer Name
+          type: string
+          description: origin issuer name
+          default: origin-ca-issuer
+          x-walrus-ui:
+            group: Basic
+            order: 6
+        issuer_kind:
+          title: Issuer Kind
+          type: string
+          description: origin issuer kind
+          default: ClusterOriginIssuer
+          x-walrus-ui:
+            group: Basic
+            order: 7
+        channel:
+          title: Channel
+          type: string
+          description: Channel config to Microsoft Teams
+          default: alerts
+          x-walrus-ui:
+            group: Basic
+            order: 8
+      x-walrus-ui:
+        groupOrder:
+        - Basic
