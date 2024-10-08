@@ -120,8 +120,6 @@ additionalPrometheusRulesMap:
           annotations:
             summary: Vault sealed (instance {{ $$labels.instance }})
             description: "Vault instance is sealed on {{ $$labels.instance }}\n  VALUE = {{ $$value }}\n  LABELS = {{ $$labels }}"
-grafana:
-  enabled: false
 defaultRules:
   rules:
     kubeProxy: false
@@ -201,3 +199,20 @@ kubeScheduler:
   enabled: false
 kubeEtcd:
   enabled: false
+grafana:
+  enabled: ${grafana_enabled}
+  ingress:
+    enabled: ${grafana_ingress_enabled}
+    hosts:
+      - grafana.${domain_name}
+    annotations:
+      cert-manager.io/issuer: ${issuer_name}
+      cert-manager.io/issuer-kind: ${issuer_kind}
+      cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
+      external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
+      external-dns.alpha.kubernetes.io/hostname: grafana.${domain_name}
+    ingressClassName: nginx
+    tls:
+      - hosts:
+          - grafana.${domain_name}
+        secretName: grafana-${dash_domain_name}

@@ -24,6 +24,8 @@ resource "helm_release" "kube-prometheus-alert" {
       dash_domain_name      = var.dash_domain_name
       issuer_name           = var.issuer_name
       issuer_kind           = var.issuer_kind
+      grafana_enabled       = var.grafana_enabled
+      grafana_ingress_enabled = var.grafana_ingress_enabled
     })
   ]
 }

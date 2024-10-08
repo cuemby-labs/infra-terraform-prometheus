@@ -54,6 +54,18 @@ variable "issuer_kind" {
   default     = "ClusterOriginIssuer"
 }
 
+variable "grafana_enabled" {
+  type        = bool
+  description = "Grafana Enabled"
+  default     = "false"
+}
+
+variable "grafana_ingress_enabled" {
+  type        = bool
+  description = "Grafana Ingress Enabled"
+  default     = "false"
+}
+
 #
 # Walrus Contextual Fields
 #
