@@ -21,6 +21,40 @@ variable "chart_version" {
 }
 
 #
+# Harbor manifest variables
+#
+
+variable "channel-teams" {
+  type        = string
+  description = "Channel Microsoft Teams"
+  default     = "alerts_dev-stg"
+}
+
+variable "domain_name" {
+  type        = string
+  description = "domain name for Harbor, e.g. 'dev.domainname.com'"
+  default     = "dev.domainname.com"
+}
+
+variable "dash_domain_name" {
+  type        = string
+  description = "domain name with dash, e.g. 'dev-domainname-com'"
+  default     = "dev-domainname-com"
+}
+
+variable "issuer_name" {
+  type        = string
+  description = "origin issuer name"
+  default     = "origin-ca-issuer"
+}
+
+variable "issuer_kind" {
+  type        = string
+  description = "origin issuer kind"
+  default     = "ClusterOriginIssuer"
+}
+
+#
 # Walrus Contextual Fields
 #
 
