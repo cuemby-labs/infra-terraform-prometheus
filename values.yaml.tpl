@@ -120,7 +120,8 @@ additionalPrometheusRulesMap:
           annotations:
             summary: Vault sealed (instance {{ $$labels.instance }})
             description: "Vault instance is sealed on {{ $$labels.instance }}\n  VALUE = {{ $$value }}\n  LABELS = {{ $$labels }}"
-
+grafana:
+  enabled: false
 defaultRules:
   rules:
     kubeProxy: false
@@ -195,7 +196,7 @@ alertmanager:
   alertmanagerSpec:
     configSecret: myalertmanager
 kubeControllerManager:
-  enabled: false
+  enabled: falspush
 kubeScheduler:
   enabled: false
 kubeEtcd:
