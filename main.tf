@@ -19,7 +19,7 @@ resource "helm_release" "kube-prometheus-alert" {
   # Ingress values
   values = [
     templatefile("${path.module}/values.yaml.tpl", {
-      MSTeams-Channel       = var.channel-teams,
+      channel-teams         = var.channel-teams,
       domain_name           = var.domain_name,
       dash_domain_name      = var.dash_domain_name
       issuer_name           = var.issuer_name
