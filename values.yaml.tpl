@@ -216,3 +216,7 @@ grafana:
       - hosts:
           - grafana.${domain_name}
         secretName: grafana-${dash_domain_name}
+prometheusOperator:
+  admissionsWebhooks:
+    certManager:
+      enabled: true
