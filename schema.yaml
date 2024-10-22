@@ -1,0 +1,119 @@
+openapi: 3.0.3
+info:
+  title: OpenAPI schema for template .
+components:
+  schemas:
+    variables:
+      type: object
+      properties:
+        release_name:
+          title: Release Name
+          type: string
+          description: The name of the Helm release.
+          default: prometheus
+          x-walrus-ui:
+            group: Basic
+            order: 1
+        namespace_name:
+          title: Namespace Name
+          type: string
+          description: The namespace where the Helm release will be installed.
+          default: prometheus-system
+          x-walrus-ui:
+            group: Basic
+            order: 2
+        chart_version:
+          title: Chart Version
+          type: string
+          description: The version of the Prometheus Helm chart.
+          default: 64.0.0
+          x-walrus-ui:
+            group: Basic
+            order: 3
+        channel-teams:
+          title: Channel Teams
+          type: string
+          description: Channel Microsoft Teams
+          default: alerts_dev-stg
+          x-walrus-ui:
+            group: Basic
+            order: 4
+        domain_name:
+          title: Domain Name
+          type: string
+          description: domain name for Harbor, e.g. 'dev.domainname.com'
+          default: dev.domainname.com
+          x-walrus-ui:
+            group: Basic
+            order: 5
+        dash_domain_name:
+          title: Dash Domain Name
+          type: string
+          description: domain name with dash, e.g. 'dev-domainname-com'
+          default: dev-domainname-com
+          x-walrus-ui:
+            group: Basic
+            order: 6
+        issuer_name:
+          title: Issuer Name
+          type: string
+          description: origin issuer name
+          default: origin-ca-issuer
+          x-walrus-ui:
+            group: Basic
+            order: 7
+        issuer_kind:
+          title: Issuer Kind
+          type: string
+          description: origin issuer kind
+          default: ClusterOriginIssuer
+          x-walrus-ui:
+            group: Basic
+            order: 8
+        grafana_enabled:
+          title: Grafana Enabled
+          type: boolean
+          description: Grafana Enabled
+          default: "false"
+          x-walrus-ui:
+            group: Basic
+            order: 9
+        grafana_ingress_enabled:
+          title: Grafana Ingress Enabled
+          type: boolean
+          description: Grafana Ingress Enabled
+          default: "false"
+          x-walrus-ui:
+            group: Basic
+            order: 10
+        additionalPrometheusRulesMap:
+          title: Additionalprometheusrulesmap
+          type: object
+          description: additionalPrometheusRulesMap
+          default: '{}'
+          additionalProperties:
+            type: object
+            x-walrus-ui:
+              colSpan: 12
+          x-walrus-ui:
+            colSpan: 12
+            group: Basic
+            order: 11
+            widget: YamlEditor
+        additionalScrapeConfigs:
+          title: Additionalscrapeconfigs
+          type: object
+          description: additionalScrapeConfigs
+          default: '{}'
+          additionalProperties:
+            type: object
+            x-walrus-ui:
+              colSpan: 12
+          x-walrus-ui:
+            colSpan: 12
+            group: Basic
+            order: 12
+            widget: YamlEditor
+      x-walrus-ui:
+        groupOrder:
+        - Basic
