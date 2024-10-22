@@ -66,6 +66,19 @@ variable "grafana_ingress_enabled" {
   default     = "false"
 }
 
+variable "additionalPrometheusRulesMap" {
+  type        = map()
+  description = "additionalPrometheusRulesMap"
+  default     = "{}"
+}
+
+variable "additionalScrapeConfigs" {
+  type        = map()
+  description = "additionalScrapeConfigs"
+  default     = "{}"
+}
+
+
 #
 # Walrus Contextual Fields
 #

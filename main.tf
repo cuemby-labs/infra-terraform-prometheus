@@ -26,6 +26,8 @@ resource "helm_release" "kube-prometheus-alert" {
       issuer_kind           = var.issuer_kind
       grafana_enabled       = var.grafana_enabled
       grafana_ingress_enabled = var.grafana_ingress_enabled
+      additionalPrometheusRulesMap = var.additionalPrometheusRulesMap
+      additionalScrapeConfigs = var.additionalScrapeConfigs
     })
   ]
 }
