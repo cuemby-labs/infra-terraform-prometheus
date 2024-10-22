@@ -78,7 +78,6 @@ variable "additionalScrapeConfigs" {
   default     = "{}"
 }
 
-
 #
 # Walrus Contextual Fields
 #
