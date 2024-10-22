@@ -67,13 +67,13 @@ variable "grafana_ingress_enabled" {
 }
 
 variable "additionalPrometheusRulesMap" {
-  type        = map(any)
+  type        = map(string)
   description = "additionalPrometheusRulesMap"
   default     = "{}"
 }
 
 variable "additionalScrapeConfigs" {
-  type        = map(any)
+  type        = map(string)
   description = "additionalScrapeConfigs"
   default     = "{}"
 }

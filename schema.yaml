@@ -92,28 +92,22 @@ components:
           description: additionalPrometheusRulesMap
           default: '{}'
           additionalProperties:
-            type: object
-            x-walrus-ui:
-              colSpan: 12
+            type: string
           x-walrus-ui:
             colSpan: 12
             group: Basic
             order: 11
-            widget: YamlEditor
         additionalScrapeConfigs:
           title: Additionalscrapeconfigs
           type: object
           description: additionalScrapeConfigs
           default: '{}'
           additionalProperties:
-            type: object
-            x-walrus-ui:
-              colSpan: 12
+            type: string
           x-walrus-ui:
             colSpan: 12
             group: Basic
             order: 12
-            widget: YamlEditor
       x-walrus-ui:
         groupOrder:
         - Basic
