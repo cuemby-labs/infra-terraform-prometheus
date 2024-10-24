@@ -4,42 +4,44 @@ defaultRules:
     kubeProxy: false
 prometheus:
   prometheusSpec:
-    additionalScrapeConfigs:
-      - job_name: 'nginx'
-        static_configs:
-        - targets: ['localhost:9113']
-      - job_name: 'vault'
-        kubernetes_sd_configs:
-          - role: endpoints
-        relabel_configs:
-        - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
-          action: keep
-          regex: true
-        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name]
-          action: keep
-          regex: ccp-dev;vault
-        - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
-          action: replace
-          target_label: __metrics_path__
-          regex: (.*)
-        - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_port]
-          action: replace
-          target_label: __address__
-          regex: (.*)
-          replacement: $1
-      - job_name: 'node-exporter'
-        static_configs:
-        - targets: 
-          - "http://localhost:9100/metrics"
-        scheme: https
-        tls_config:
-          insecure_skip_verify: true
+additionalScrapeConfigs:
+  - job_name: 'nginx'
+    static_configs:
+    - targets: ['localhost:9113']
+    
+  - job_name: 'vault'
+    kubernetes_sd_configs:
+      - role: endpoints
+    relabel_configs:
+    - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+      action: keep
+      regex: true
+    - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name]
+      action: keep
+      regex: ccp-dev;vault
+    - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+      action: replace
+      target_label: __metrics_path__
+      regex: (.*)
+    - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_port]
+      action: replace
+      target_label: __address__
+      regex: (.*)
+      replacement: $1
+
+  - job_name: 'node-exporter'
+    static_configs:
+    - targets: 
+      - "http://localhost:9100/metrics"
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
     # Relabeling "instance" to remove the ":9100" part
-        relabel_configs:
-        - source_labels: prometheus-dev-prometheus-node-exporter
-          target_label: instance
-          regex: '([^:]+)(:[0-9]+)?'
-          replacement: '${1}'
+    relabel_configs:
+    - source_labels: [prometheus-dev-prometheus-node-exporter]
+      target_label: instance
+      regex: '([^:]+)(:[0-9]+)?'
+      replacement: '${1}'
 #Fin
   service:
     type: ClusterIP
