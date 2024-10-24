@@ -57,13 +57,13 @@ variable "issuer_kind" {
 variable "grafana_enabled" {
   type        = bool
   description = "Grafana Enabled"
-  default     = "false"
+  default     = false
 }
 
 variable "grafana_ingress_enabled" {
   type        = bool
   description = "Grafana Ingress Enabled"
-  default     = "false"
+  default     = false
 }
 
 #
