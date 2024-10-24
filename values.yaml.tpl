@@ -166,7 +166,7 @@ prometheus:
     type: ClusterIP
   ingress:
     hosts:
-        - prometheus.${domain_name}
+      - prometheus.${domain_name}
     annotations:
       cert-manager.io/issuer: ${issuer_name}
       cert-manager.io/issuer-kind: ${issuer_kind}
@@ -177,7 +177,7 @@ prometheus:
     ingressClassName: nginx
     tls:
       - hosts:
-          - prometheus.${domain_name}
+        - prometheus.${domain_name}
         secretName: prometheus-${dash_domain_name}
 alertmanager:
   enabled: true
