@@ -8,7 +8,7 @@ additionalScrapeConfigs:
   - job_name: 'nginx'
     static_configs:
     - targets: ['localhost:9113']
-    
+
   - job_name: 'vault'
     kubernetes_sd_configs:
       - role: endpoints
@@ -79,7 +79,7 @@ alertmanager:
   alertmanagerSpec:
     configSecret: myalertmanager
 kubeControllerManager:
-  enabled: falspush
+  enabled: false
 kubeScheduler:
   enabled: false
 kubeEtcd:
