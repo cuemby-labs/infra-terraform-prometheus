@@ -30,7 +30,7 @@ components:
           x-walrus-ui:
             group: Basic
             order: 3
-        channel-teams:
+        channel_teams:
           title: Channel Teams
           type: string
           description: Channel Microsoft Teams

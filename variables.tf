@@ -24,7 +24,7 @@ variable "chart_version" {
 # Harbor manifest variables
 #
 
-variable "channel-teams" {
+variable "channel_teams" {
   type        = string
   description = "Channel Microsoft Teams"
   default     = "alerts_dev-stg"

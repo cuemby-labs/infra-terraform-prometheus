@@ -190,7 +190,7 @@ alertmanager:
     receivers:
     - name: 'webhook'
       webhook_configs:
-      - url: 'http://prometheus-msteams:2000/${channel-teams}'
+      - url: 'http://prometheus-msteams:2000/${channel_teams}'
         send_resolved: true
   alertmanagerSpec:
     configSecret: myalertmanager
