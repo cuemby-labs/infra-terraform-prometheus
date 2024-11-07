@@ -19,6 +19,7 @@ prometheus:
       cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
       external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
       external-dns.alpha.kubernetes.io/hostname: prometheus.${domain_name}
+      nginx.ingress.kubernetes.io/whitelist-source-range: ${whitelist_ips_string}
     enabled: true
     ingressClassName: nginx
     tls:
@@ -39,7 +40,7 @@ alertmanager:
     receivers:
     - name: 'webhook'
       webhook_configs:
-      - url: 'http://prometheus-msteams:2000/${channel-teams}'
+      - url: 'http://prometheus-msteams:2000/${channel_teams}'
         send_resolved: true
   alertmanagerSpec:
     configSecret: myalertmanager

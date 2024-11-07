@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: OpenAPI schema for template .
+  title: OpenAPI schema for Prometheus template .
 components:
   schemas:
     variables:
@@ -30,7 +30,7 @@ components:
           x-walrus-ui:
             group: Basic
             order: 3
-        channel-teams:
+        channel_teams:
           title: Channel Teams
           type: string
           description: Channel Microsoft Teams
@@ -86,135 +86,20 @@ components:
           x-walrus-ui:
             group: Basic
             order: 10
-        additional_prometheus_rules_map:
-          title: Additional Prometheus Rules Map
-          type: object
-          description: additionalPrometheusRulesMap
+        whitelist_ips:
+          title: Whitelist Ips
+          type: array
+          description: List of IP addresses to be whitelisted
           default:
-            rule-name:
-              groups:
-              - name: rules-cuemby
-                rules:
-                - alert: OpenebsUsedPoolCapacity
-                  annotations:
-                    description: |-
-                      OpenEBS Pool use more than 90% of his capacity
-                        VALUE = {{ $value }}
-                        LABELS = {{ $labels }}
-                    summary: OpenEBS used pool capacity (instance {{ $labels.instance
-                      }})
-                  expr: openebs_used_pool_capacity_percent > 90
-                  for: 2m
-                  labels:
-                    severity: warning
-                - alert: HostOutOfMemory
-                  annotations:
-                    description: |-
-                      Node memory is filling up (< 10% left)
-                        VALUE = {{ $value }}
-                        LABELS = {{ $labels }}
-                    summary: Host out of memory (instance {{ $labels.instance }})
-                  expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes
-                    * 100 < 10) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
-                  for: 2m
-                  labels:
-                    severity: warning
-                - alert: HostMemoryUnderMemoryPressure
-                  annotations:
-                    description: |-
-                      The node is under heavy memory pressure. High rate of major page faults
-                        VALUE = {{ $value }}
-                        LABELS = {{ $labels }}
-                    summary: Host memory under memory pressure (instance {{ $labels.instance
-                      }})
-                  expr: (rate(node_vmstat_pgmajfault[1m]) > 1000) * on(instance) group_left
-                    (nodename) node_uname_info{nodename=~".+"}
-                  for: 2m
-                  labels:
-                    severity: warning
-          additionalProperties:
+          - 192.168.1.1
+          - 192.168.1.2
+          - 192.168.1.3
+          items:
             type: string
           x-walrus-ui:
             colSpan: 12
             group: Basic
             order: 11
-        prometheus_alert_rules_map2:
-          title: Prometheus Alert Rules Map2
-          type: object
-          description: Map of Prometheus alert rules
-          default:
-            HostHighCpuLoad:
-              description: |-
-                CPU load is > 90%
-                  VALUE = {{ $value }}
-                  LABELS = {{ $labels }}
-              expr: (sum by (instance) (avg by (mode, instance) (rate(node_cpu_seconds_total{mode!="idle"}[2m])))
-                > 0.8) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
-              for: 5m
-              severity: warning
-              summary: Host high CPU load (instance {{ $labels.instance }})
-            HostUnusualNetworkThroughputIn:
-              description: |-
-                Host network interfaces are probably receiving too much data (> 100 MB/s)
-                  VALUE = {{ $value }}
-                  LABELS = {{ $labels }}
-              expr: (sum by (instance) (rate(node_network_receive_bytes_total[2m]))
-                / 1024 / 1024 > 100) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
-              for: 5m
-              severity: warning
-              summary: Host unusual network throughput in (instance {{ $labels.instance
-                }})
-          additionalProperties:
-            properties:
-              description:
-                title: Description
-                type: string
-                x-walrus-ui:
-                  order: 5
-              expr:
-                title: Expr
-                type: string
-                x-walrus-ui:
-                  order: 1
-              for:
-                title: For
-                type: string
-                x-walrus-ui:
-                  order: 2
-              severity:
-                title: Severity
-                type: string
-                x-walrus-ui:
-                  order: 3
-              summary:
-                title: Summary
-                type: string
-                x-walrus-ui:
-                  order: 4
-            required:
-            - description
-            - expr
-            - for
-            - severity
-            - summary
-            type: object
-            x-walrus-ui:
-              colSpan: 12
-          x-walrus-ui:
-            colSpan: 12
-            group: Basic
-            order: 12
-        additional_scrape_configs:
-          title: Additional Scrape Configs
-          type: object
-          description: additionalScrapeConfigs
-          default: '{}'
-          additionalProperties:
-            type: string
-          x-walrus-ui:
-            colSpan: 12
-            group: Basic
-            order: 13
       x-walrus-ui:
         groupOrder:
         - Basic
