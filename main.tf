@@ -16,7 +16,6 @@ resource "helm_release" "kube_prometheus_alert" {
   chart      = "kube-prometheus-stack"
   version    = var.chart_version
 
-  # Ingress values
   values = [
     templatefile("${path.module}/values.yaml.tpl", {
       channel_teams           = var.channel_teams,
