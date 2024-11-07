@@ -1,4 +1,13 @@
 #
+# Prometheus output
+#
+
+output "whitelist_ips" {
+  value       = local.whitelist_ips_string
+  description = "String of public IP addresses."
+}
+
+#
 # Walrus Contextual output
 #
 
