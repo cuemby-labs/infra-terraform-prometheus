@@ -36,5 +36,5 @@ resource "helm_release" "kube_prometheus_alert" {
 
 locals {
   context              = var.context
-  whitelist_ips_string = join(", ", var.whitelist_ips)
+  whitelist_ips_string = join(",", var.whitelist_ips)
 }
