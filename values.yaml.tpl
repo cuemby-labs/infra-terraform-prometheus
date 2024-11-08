@@ -211,7 +211,7 @@ grafana:
       cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
       external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
       external-dns.alpha.kubernetes.io/hostname: grafana.${domain_name}
-      nginx.ingress.kubernetes.io/whitelist-source-range: '${whitelist_ips_string}'
+      nginx.ingress.kubernetes.io/whitelist-source-range: "${whitelist_ips_string}"
     ingressClassName: nginx
     tls:
       - hosts:
