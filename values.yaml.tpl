@@ -169,6 +169,7 @@ prometheus:
       cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
       external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
       external-dns.alpha.kubernetes.io/hostname: prometheus.${domain_name}
+      nginx.ingress.kubernetes.io/whitelist-source-range: '${whitelist_ips_string}'
     enabled: true
     ingressClassName: nginx
     tls:
@@ -206,7 +207,6 @@ grafana:
     hosts:
       - grafana.${domain_name}
     annotations:
-      nginx.ingress.kubernetes.io/whitelist-source-range: ${whitelist_ips_string}
       cert-manager.io/issuer: ${issuer_name}
       cert-manager.io/issuer-kind: ${issuer_kind}
       cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
