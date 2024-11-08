@@ -20,7 +20,7 @@ resource "helm_release" "kube_prometheus_alert" {
     templatefile("${path.module}/values.yaml.tpl", {
       channel_teams           = var.channel_teams,
       domain_name             = var.domain_name,
-      dash_domain_name        = var.dash_domain_name,
+      dash_domain_name        = local.dash_domain_name,
       issuer_name             = var.issuer_name,
       issuer_kind             = var.issuer_kind,
       grafana_enabled         = var.grafana_enabled,
@@ -37,4 +37,5 @@ resource "helm_release" "kube_prometheus_alert" {
 locals {
   context              = var.context
   whitelist_ips_string = join(",", var.whitelist_ips)
+  dash_domain_name     = replace(var.domain_name, ".", "-")
 }

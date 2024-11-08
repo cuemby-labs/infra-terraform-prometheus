@@ -41,35 +41,27 @@ components:
         domain_name:
           title: Domain Name
           type: string
-          description: domain name for Harbor, e.g. 'dev.domainname.com'
+          description: Domain name for Harbor, e.g. 'dev.domainname.com'
           default: dev.domainname.com
           x-walrus-ui:
             group: Basic
             order: 5
-        dash_domain_name:
-          title: Dash Domain Name
-          type: string
-          description: domain name with dash, e.g. 'dev-domainname-com'
-          default: dev-domainname-com
-          x-walrus-ui:
-            group: Basic
-            order: 6
         issuer_name:
           title: Issuer Name
           type: string
-          description: origin issuer name
+          description: Origin issuer name
           default: origin-ca-issuer
           x-walrus-ui:
             group: Basic
-            order: 7
+            order: 6
         issuer_kind:
           title: Issuer Kind
           type: string
-          description: origin issuer kind
+          description: Origin issuer kind
           default: ClusterOriginIssuer
           x-walrus-ui:
             group: Basic
-            order: 8
+            order: 7
         grafana_enabled:
           title: Grafana Enabled
           type: boolean
@@ -77,7 +69,7 @@ components:
           default: "false"
           x-walrus-ui:
             group: Basic
-            order: 9
+            order: 8
         grafana_ingress_enabled:
           title: Grafana Ingress Enabled
           type: boolean
@@ -85,7 +77,7 @@ components:
           default: "false"
           x-walrus-ui:
             group: Basic
-            order: 10
+            order: 9
         whitelist_ips:
           title: Whitelist Ips
           type: array
@@ -99,7 +91,7 @@ components:
           x-walrus-ui:
             colSpan: 12
             group: Basic
-            order: 11
+            order: 10
       x-walrus-ui:
         groupOrder:
         - Basic
