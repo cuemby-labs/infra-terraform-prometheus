@@ -92,6 +92,14 @@ components:
             colSpan: 12
             group: Basic
             order: 10
+        config_secret:
+          title: Config Secret
+          type: string
+          description: SecretConfig for MSTeams
+          default: alertmanager-prometheus-kube-prometheus-alertmanager
+          x-walrus-ui:
+            group: Basic
+            order: 11
       x-walrus-ui:
         groupOrder:
         - Basic
