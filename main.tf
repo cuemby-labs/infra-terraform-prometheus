@@ -25,7 +25,8 @@ resource "helm_release" "kube_prometheus_alert" {
       issuer_kind             = var.issuer_kind,
       grafana_enabled         = var.grafana_enabled,
       grafana_ingress_enabled = var.grafana_ingress_enabled,
-      whitelist_ips_string    = local.whitelist_ips_string
+      whitelist_ips_string    = local.whitelist_ips_string,
+      config_secret           = var.config_secret
     })
   ]
 }

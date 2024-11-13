@@ -21,7 +21,7 @@ variable "chart_version" {
 }
 
 #
-# Harbor manifest variables
+# Prometheus manifest variables
 #
 
 variable "channel_teams" {
@@ -64,6 +64,12 @@ variable "whitelist_ips" {
   type        = list(string)
   description = "List of IP addresses to be whitelisted"
   default     = ["192.168.1.1", "192.168.1.2", "192.168.1.3"]
+}
+
+variable "config_secret" {
+  type        = string
+  description = "SecretConfig for MSTeams"
+  default     = "alertmanager-prometheus-kube-prometheus-alertmanager"
 }
 
 #

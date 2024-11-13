@@ -193,7 +193,7 @@ alertmanager:
       - url: 'http://prometheus-msteams:2000/${channel_teams}'
         send_resolved: true
   alertmanagerSpec:
-    configSecret: myalertmanager
+    configSecret: ${config_secret}
 kubeControllerManager:
   enabled: falspush
 kubeScheduler:
