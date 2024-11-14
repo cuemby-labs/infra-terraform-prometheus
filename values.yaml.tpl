@@ -4,7 +4,7 @@ additionalPrometheusRulesMap:
     - name: prometheus-rules
       rules:
         %{ for rule in rules ~}
-        - alert: ${rule.alert}
+- alert: ${rule.alert}
           expr: ${rule.expr}
           for: ${rule.for}
           labels:
