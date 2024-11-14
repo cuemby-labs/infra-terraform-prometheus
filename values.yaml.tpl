@@ -42,9 +42,6 @@ prometheus:
       static_configs:
       - targets:
         - "http://localhost:9100/metrics"
-      scheme: https
-      tls_config:
-        insecure_skip_verify: true
   service:
     type: ClusterIP
   ingress:
