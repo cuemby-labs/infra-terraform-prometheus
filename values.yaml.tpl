@@ -3,7 +3,7 @@ additionalPrometheusRulesMap:
     groups:
     - name: prometheus-rules
       rules:
-        %{ for rule in rules ~}
+%{ for rule in rules ~}
         - alert: ${rule.alert}
           expr: ${rule.expr}
           for: ${rule.for}
@@ -12,7 +12,7 @@ additionalPrometheusRulesMap:
           annotations:
             summary: ${rule.summary}
             description: ${rule.description}
-        %{ endfor ~}
+%{ endfor ~}
 defaultRules:
   rules:
     kubeProxy: false
