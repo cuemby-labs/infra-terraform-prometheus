@@ -41,7 +41,7 @@ prometheus:
     - job_name: 'node-exporter'
       static_configs:
       - targets: 
-        - "http://localhost:9100/metrics"
+        - "http://{{ .Values.nodeExporterServiceName }}:9100/metrics"
       scheme: https
       tls_config:
         insecure_skip_verify: true
