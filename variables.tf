@@ -120,8 +120,8 @@ variable "additional_scrape_configs" {
       replacement: $1
 - job_name: 'node-exporter'
   static_configs:
-  - targets:
-    - "http://prometheus-prometheus-node-exporter:9100/metrics"
+    - targets:
+      - "http://prometheus-prometheus-node-exporter:9100/metrics"
   scheme: https
   tls_config:
     insecure_skip_verify: true
