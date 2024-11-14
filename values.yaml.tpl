@@ -39,12 +39,12 @@ prometheus:
           regex: (.*)
           replacement: $1
     - job_name: 'node-exporter'
-      static_configs:
-      - targets: 
-        - "http://{{ .Values.nodeExporterServiceName }}:9100/metrics"
-      scheme: https
-      tls_config:
-        insecure_skip_verify: true
+        kubernetes_sd_configs:
+          - role: endpoints
+        relabel_configs:
+        - source_labels: [__meta_kubernetes_endpoints_name]
+          regex: 'node-exporter'
+          action: keep
   service:
     type: ClusterIP
   ingress:
