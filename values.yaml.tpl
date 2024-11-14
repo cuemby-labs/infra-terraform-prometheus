@@ -3,16 +3,16 @@ additionalPrometheusRulesMap:
     groups:
     - name: prometheus-rules
       rules:
-%{ for rule in rules ~}
-      - alert: ${rule.alert}
-        expr: ${rule.expr}
-        for: ${rule.for}
-        labels:
-          severity: ${rule.severity}
-        annotations:
-          summary: ${rule.summary}
-          description: ${rule.description}
-%{ endfor ~}
+        %{ for rule in rules ~}
+        - alert: ${rule.alert}
+          expr: ${rule.expr}
+          for: ${rule.for}
+          labels:
+            severity: ${rule.severity}
+          annotations:
+            summary: ${rule.summary}
+            description: ${rule.description}
+        %{ endfor ~}
 defaultRules:
   rules:
     kubeProxy: false
