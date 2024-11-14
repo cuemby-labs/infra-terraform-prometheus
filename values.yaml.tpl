@@ -3,7 +3,7 @@ additionalPrometheusRulesMap:
     groups:
     - name: prometheus-rules
       rules:
-        %{ for rule in rules ~}
+%{ for rule in rules ~}
 - alert: ${rule.alert}
           expr: ${rule.expr}
           for: ${rule.for}
@@ -12,7 +12,7 @@ additionalPrometheusRulesMap:
           annotations:
             summary: ${rule.summary}
             description: ${rule.description}
-        %{ endfor ~}
+%{ endfor ~}
 defaultRules:
   rules:
     kubeProxy: false
@@ -45,13 +45,6 @@ prometheus:
       scheme: https
       tls_config:
         insecure_skip_verify: true
-## Relabeling "instance" to remove the ":9100" part
-#  relabel_configs:
-#    - source_labels: prometheus-dev-prometheus-node-exporter
-#      target_label: instance
-#      regex: '([^:]+)(:[0-9]+)?'
-#      replacement: '${1}'
-#Fin
   service:
     type: ClusterIP
   ingress:
