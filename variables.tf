@@ -72,60 +72,10 @@ variable "config_secret" {
   default     = "alertmanager-prometheus-kube-prometheus-alertmanager"
 }
 
-variable "rules" {
-  description = "Adding rules for AlertManager"
-  type = list(object({
-    alert       = string
-    expr        = string
-    for         = string
-    severity    = string
-    summary     = string
-    description = string
-  }))
-
-  default = [
-    {
-      alert       = "HostOutOfMemory"
-      expr        = "(node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 10) * on(instance) group_left (nodename) node_uname_info{nodename=~'.+'}"
-      for         = "2m"
-      severity    = "warning"
-      summary     = "Host out of memory (instance  \\{\\{ $$labels.instance \\}\\})"
-      description = "Node memory is filling up (< 10% left)\n  VALUE =  \\{\\{ $$value \\}\\}\n  LABELS =  \\{\\{ $$labels \\}\\}"
-    }
-  ]
-}
-
-variable "additional_scrape_configs" {
-  description = "YAML configuration for additional scrape configs in Prometheus"
+variable "values" {
   type        = string
-  default     = <<-EOT
-- job_name: 'vault'
-  kubernetes_sd_configs:
-    - role: endpoints
-  relabel_configs:
-    - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
-      action: keep
-      regex: true
-    - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name]
-      action: keep
-      regex: ccp-dev;vault
-    - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
-      action: replace
-      target_label: __metrics_path__
-      regex: (.*)
-    - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_port]
-      action: replace
-      target_label: __address__
-      regex: (.*)
-      replacement: $1
-- job_name: 'node-exporter'
-  static_configs:
-    - targets:
-      - "http://prometheus-prometheus-node-exporter:9100/metrics"
-  scheme: https
-  tls_config:
-    insecure_skip_verify: true
-EOT
+  description = "Raw URL with the values file for Prometheus HelmChart, more info https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack?modal=values"
+  default     = "https://raw.githubusercontent.com/cuemby-labs/infra-terraform-prometheus/refs/tags/v1.0.6/values.yaml"
 }
 
 #

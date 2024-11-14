@@ -8,6 +8,10 @@ resource "kubernetes_namespace" "prometheus_alert" {
   }
 }
 
+data "http" "remote_values_file" {
+  url = var.values
+}
+
 resource "helm_release" "kube_prometheus_alert" {
   name       = var.release_name
   namespace  = var.namespace_name
@@ -17,19 +21,7 @@ resource "helm_release" "kube_prometheus_alert" {
   version    = var.chart_version
 
   values = [
-    templatefile("${path.module}/values.yaml.tpl", {
-      channel_teams             = var.channel_teams,
-      domain_name               = var.domain_name,
-      dash_domain_name          = local.dash_domain_name,
-      issuer_name               = var.issuer_name,
-      issuer_kind               = var.issuer_kind,
-      grafana_enabled           = var.grafana_enabled,
-      grafana_ingress_enabled   = var.grafana_ingress_enabled,
-      whitelist_ips_string      = local.whitelist_ips_string,
-      config_secret             = var.config_secret,
-      rules                     = var.rules,
-      additional_scrape_configs = var.additional_scrape_configs
-    })
+    yamldecode(local.values_with_vars)
   ]
 }
 
@@ -39,6 +31,36 @@ resource "helm_release" "kube_prometheus_alert" {
 
 locals {
   context              = var.context
+  values_with_vars = replace(
+    replace(
+      replace(
+        replace(
+          replace(
+            replace(
+              replace(
+                replace(
+                  replace(
+                    replace(
+                      data.http.remote_values_file.response_body,
+                      "${channel_teams}", var.channel_teams
+                    ),
+                    "${domain_name}", var.domain_name
+                  ),
+                  "${dash_domain_name}", local.dash_domain_name
+                ),
+                "${issuer_name}", var.issuer_name
+              ),
+              "${issuer_kind}", var.issuer_kind
+            ),
+            "${grafana_enabled}", tostring(var.grafana_enabled)
+          ),
+          "${grafana_ingress_enabled}", tostring(var.grafana_ingress_enabled)
+        ),
+        "${whitelist_ips_string}", local.whitelist_ips_string
+      ),
+      "${config_secret}", var.config_secret
+    )
+  )
   whitelist_ips_string = join(",", var.whitelist_ips)
   dash_domain_name     = replace(var.domain_name, ".", "-")
 }
