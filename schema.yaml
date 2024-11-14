@@ -100,6 +100,66 @@ components:
           x-walrus-ui:
             group: Basic
             order: 11
+        rules:
+          title: Rules
+          type: array
+          default:
+          - alert: HostOutOfMemory
+            description: |-
+              Node memory is filling up (< 10% left)
+                VALUE = {{ $$value }}
+                LABELS = {{ $$labels }}
+            expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100
+              < 10) * on(instance) group_left (nodename) node_uname_info{nodename=~'.+'}
+            for: 2m
+            severity: warning
+            summary: Host out of memory (instance {{ $$labels.instance }})
+          items:
+            properties:
+              alert:
+                title: Alert
+                type: string
+                x-walrus-ui:
+                  order: 1
+              description:
+                title: Description
+                type: string
+                x-walrus-ui:
+                  order: 6
+              expr:
+                title: Expr
+                type: string
+                x-walrus-ui:
+                  order: 2
+              for:
+                title: For
+                type: string
+                x-walrus-ui:
+                  order: 3
+              severity:
+                title: Severity
+                type: string
+                x-walrus-ui:
+                  order: 4
+              summary:
+                title: Summary
+                type: string
+                x-walrus-ui:
+                  order: 5
+            required:
+            - alert
+            - description
+            - expr
+            - for
+            - severity
+            - summary
+            type: object
+            x-walrus-ui:
+              colSpan: 12
+          x-walrus-ui:
+            colSpan: 12
+            group: Basic
+            order: 12
       x-walrus-ui:
         groupOrder:
         - Basic
