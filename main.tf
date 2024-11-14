@@ -18,16 +18,17 @@ resource "helm_release" "kube_prometheus_alert" {
 
   values = [
     templatefile("${path.module}/values.yaml.tpl", {
-      channel_teams           = var.channel_teams,
-      domain_name             = var.domain_name,
-      dash_domain_name        = local.dash_domain_name,
-      issuer_name             = var.issuer_name,
-      issuer_kind             = var.issuer_kind,
-      grafana_enabled         = var.grafana_enabled,
-      grafana_ingress_enabled = var.grafana_ingress_enabled,
-      whitelist_ips_string    = local.whitelist_ips_string,
-      config_secret           = var.config_secret,
-      rules                   = var.rules
+      channel_teams             = var.channel_teams,
+      domain_name               = var.domain_name,
+      dash_domain_name          = local.dash_domain_name,
+      issuer_name               = var.issuer_name,
+      issuer_kind               = var.issuer_kind,
+      grafana_enabled           = var.grafana_enabled,
+      grafana_ingress_enabled   = var.grafana_ingress_enabled,
+      whitelist_ips_string      = local.whitelist_ips_string,
+      config_secret             = var.config_secret,
+      rules                     = var.rules,
+      additional_scrape_configs = var.additional_scrape_configs
     })
   ]
 }

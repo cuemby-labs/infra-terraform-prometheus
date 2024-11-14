@@ -103,17 +103,18 @@ components:
         rules:
           title: Rules
           type: array
+          description: Adding rules for AlertManager
           default:
           - alert: HostOutOfMemory
             description: |-
               Node memory is filling up (< 10% left)
-                VALUE = {{ $$value }}
-                LABELS = {{ $$labels }}
+                VALUE =  \{\{ $$value \}\}
+                LABELS =  \{\{ $$labels \}\}
             expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100
               < 10) * on(instance) group_left (nodename) node_uname_info{nodename=~'.+'}
             for: 2m
             severity: warning
-            summary: Host out of memory (instance {{ $$labels.instance }})
+            summary: Host out of memory (instance  \{\{ $$labels.instance \}\})
           items:
             properties:
               alert:
@@ -160,6 +161,41 @@ components:
             colSpan: 12
             group: Basic
             order: 12
+        additional_scrape_configs:
+          title: Additional Scrape Configs
+          type: string
+          description: YAML configuration for additional scrape configs in Prometheus
+          default: |
+            - job_name: 'vault'
+              kubernetes_sd_configs:
+                - role: endpoints
+              relabel_configs:
+                - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+                  action: keep
+                  regex: true
+                - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name]
+                  action: keep
+                  regex: ccp-dev;vault
+                - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+                  action: replace
+                  target_label: __metrics_path__
+                  regex: (.*)
+                - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_port]
+                  action: replace
+                  target_label: __address__
+                  regex: (.*)
+                  replacement: $1
+            - job_name: 'node-exporter'
+              static_configs:
+              - targets:
+                - "http://prometheus-prometheus-node-exporter:9100/metrics"
+              scheme: https
+              tls_config:
+                insecure_skip_verify: true
+          x-walrus-ui:
+            group: Basic
+            order: 13
+            textarea: true
       x-walrus-ui:
         groupOrder:
         - Basic

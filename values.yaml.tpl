@@ -19,29 +19,7 @@ defaultRules:
 prometheus:
   prometheusSpec:
     additionalScrapeConfigs:
-    - job_name: 'vault'
-      kubernetes_sd_configs:
-        - role: endpoints
-      relabel_configs:
-        - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
-          action: keep
-          regex: true
-        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name]
-          action: keep
-          regex: ccp-dev;vault
-        - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
-          action: replace
-          target_label: __metrics_path__
-          regex: (.*)
-        - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_port]
-          action: replace
-          target_label: __address__
-          regex: (.*)
-          replacement: $1
-    - job_name: 'node-exporter'
-      static_configs:
-      - targets:
-        - "http://localhost:9100/metrics"
+    ${additional_scrape_configs}
   service:
     type: ClusterIP
   ingress:

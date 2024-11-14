@@ -73,6 +73,7 @@ variable "config_secret" {
 }
 
 variable "rules" {
+  description = "Adding rules for AlertManager"
   type = list(object({
     alert       = string
     expr        = string
@@ -92,6 +93,39 @@ variable "rules" {
       description = "Node memory is filling up (< 10% left)\n  VALUE =  \\{\\{ $$value \\}\\}\n  LABELS =  \\{\\{ $$labels \\}\\}"
     }
   ]
+}
+
+variable "additional_scrape_configs" {
+  description = "YAML configuration for additional scrape configs in Prometheus"
+  type        = string
+  default     = <<-EOT
+- job_name: 'vault'
+  kubernetes_sd_configs:
+    - role: endpoints
+  relabel_configs:
+    - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+      action: keep
+      regex: true
+    - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name]
+      action: keep
+      regex: ccp-dev;vault
+    - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+      action: replace
+      target_label: __metrics_path__
+      regex: (.*)
+    - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_port]
+      action: replace
+      target_label: __address__
+      regex: (.*)
+      replacement: $1
+- job_name: 'node-exporter'
+  static_configs:
+  - targets:
+    - "http://prometheus-prometheus-node-exporter:9100/metrics"
+  scheme: https
+  tls_config:
+    insecure_skip_verify: true
+EOT
 }
 
 #
