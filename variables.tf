@@ -88,8 +88,8 @@ variable "rules" {
       expr        = "(node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 10) * on(instance) group_left (nodename) node_uname_info{nodename=~'.+'}"
       for         = "2m"
       severity    = "warning"
-      summary     = "Host out of memory (instance {{ $$labels.instance }})"
-      description = "Node memory is filling up (< 10% left)\n  VALUE = {{ $$value }}\n  LABELS = {{ $$labels }}"
+      summary     = "Host out of memory (instance  \\{\\{ $$labels.instance \\}\\})"
+      description = "Node memory is filling up (< 10% left)\n  VALUE =  \\{\\{ $$value \\}\\}\n  LABELS =  \\{\\{ $$labels \\}\\}"
     }
   ]
 }
