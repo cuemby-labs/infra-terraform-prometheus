@@ -30,38 +30,25 @@ resource "helm_release" "kube_prometheus_alert" {
 #
 
 locals {
-  context          = var.context
-  values_with_vars = replace(
-    replace(
-      replace(
-        replace(
-          replace(
-            replace(
-              replace(
-                replace(
-                  replace(
-                    replace(
-                      data.http.remote_values_file.response_body,
-                      "var_channel_teams", var.channel_teams
-                    ),
-                    "var_domain_name", var.domain_name
-                  ),
-                  "var_dash_domain_name", local.dash_domain_name
-                ),
-                "var_issuer_name", var.issuer_name
-              ),
-              "var_issuer_kind", var.issuer_kind
-            ),
-            "var_grafana_enabled", tostring(var.grafana_enabled)
-          ),
-          "var_grafana_ingress_enabled", tostring(var.grafana_ingress_enabled)
-        ),
-        "var_whitelist_ips_string", local.whitelist_ips_string
-      ),
-      "var_config_secret", var.config_secret
-    )
-  )
+  context = var.context
+
+  replacements = {
+    "var_channel_teams"           = var.channel_teams
+    "var_domain_name"             = var.domain_name
+    "var_dash_domain_name"        = local.dash_domain_name
+    "var_issuer_name"             = var.issuer_name
+    "var_issuer_kind"             = var.issuer_kind
+    "var_grafana_enabled"         = tostring(var.grafana_enabled)
+    "var_grafana_ingress_enabled" = tostring(var.grafana_ingress_enabled)
+    "var_whitelist_ips_string"    = local.whitelist_ips_string
+    "var_config_secret"           = var.config_secret
+  }
 
   whitelist_ips_string = join(",", var.whitelist_ips)
   dash_domain_name     = replace(var.domain_name, ".", "-")
+
+  # Aplicar todos los reemplazos en una sola operación
+  values_with_vars = reduce(local.replacements, data.http.remote_values_file.response_body, 
+    (val, pair) => replace(val, pair.key, pair.value)
+  )
 }
