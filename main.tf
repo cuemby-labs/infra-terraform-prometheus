@@ -30,7 +30,7 @@ resource "helm_release" "kube_prometheus_alert" {
 #
 
 locals {
-  context              = var.context
+  context          = var.context
   values_with_vars = replace(
     replace(
       replace(
@@ -61,6 +61,7 @@ locals {
       "var_config_secret", var.config_secret
     )
   )
+
   whitelist_ips_string = join(",", var.whitelist_ips)
   dash_domain_name     = replace(var.domain_name, ".", "-")
 }
