@@ -20,6 +20,7 @@ prometheus:
   prometheusSpec:
     additionalScrapeConfigs:
     ${additional_scrape_configs}
+prometheus:
   service:
     type: ClusterIP
   ingress:

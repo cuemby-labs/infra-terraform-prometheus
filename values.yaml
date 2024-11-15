@@ -122,20 +122,20 @@ prometheus:
     type: ClusterIP
   ingress:
     hosts:
-        - prometheus.${domain_name}
+        - prometheus.var_domain_name
     annotations:
-      cert-manager.io/issuer: ${issuer_name}
-      cert-manager.io/issuer-kind: ${issuer_kind}
+      cert-manager.io/issuer: var_issuer_name
+      cert-manager.io/issuer-kind: var_issuer_kind
       cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
       external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
-      external-dns.alpha.kubernetes.io/hostname: prometheus.${domain_name}
-      nginx.ingress.kubernetes.io/whitelist-source-range: '${whitelist_ips_string}'
+      external-dns.alpha.kubernetes.io/hostname: prometheus.var_domain_name
+      nginx.ingress.kubernetes.io/whitelist-source-range: 'var_whitelist_ips_string'
     enabled: true
     ingressClassName: nginx
     tls:
       - hosts:
-          - prometheus.${domain_name}
-        secretName: prometheus-${dash_domain_name}
+          - prometheus.var_domain_name
+        secretName: prometheus-var_dash_domain_name
 alertmanager:
   enabled: true
   config:
@@ -150,10 +150,10 @@ alertmanager:
     receivers:
     - name: 'webhook'
       webhook_configs:
-      - url: 'http://prometheus-msteams:2000/${channel_teams}'
+      - url: 'http://prometheus-msteams:2000/var_channel_teams'
         send_resolved: true
   alertmanagerSpec:
-    configSecret: ${config_secret}
+    configSecret: var_config_secret
 kubeControllerManager:
   enabled: falspush
 kubeScheduler:
@@ -161,19 +161,19 @@ kubeScheduler:
 kubeEtcd:
   enabled: false
 grafana:
-  enabled: ${grafana_enabled}
+  enabled: var_grafana_enabled
   ingress:
-    enabled: ${grafana_ingress_enabled}
+    enabled: var_grafana_ingress_enabled
     hosts:
-      - grafana.${domain_name}
+      - grafana.var_domain_name
     annotations:
-      cert-manager.io/issuer: ${issuer_name}
-      cert-manager.io/issuer-kind: ${issuer_kind}
+      cert-manager.io/issuer: var_issuer_name
+      cert-manager.io/issuer-kind: var_issuer_kind
       cert-manager.io/issuer-group: cert-manager.k8s.cloudflare.com
       external-dns.alpha.kubernetes.io/cloudflare-proxied: 'true'
-      external-dns.alpha.kubernetes.io/hostname: grafana.${domain_name}
+      external-dns.alpha.kubernetes.io/hostname: grafana.var_domain_name
     ingressClassName: nginx
     tls:
       - hosts:
-          - grafana.${domain_name}
-        secretName: grafana-${dash_domain_name}
+          - grafana.var_domain_name
+        secretName: grafana-var_dash_domain_name

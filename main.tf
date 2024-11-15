@@ -42,23 +42,23 @@ locals {
                   replace(
                     replace(
                       data.http.remote_values_file.response_body,
-                      "${channel_teams}", var.channel_teams
+                      "var_channel_teams", var.channel_teams
                     ),
-                    "${domain_name}", var.domain_name
+                    "var_domain_name", var.domain_name
                   ),
-                  "${dash_domain_name}", local.dash_domain_name
+                  "var_dash_domain_name", local.dash_domain_name
                 ),
-                "${issuer_name}", var.issuer_name
+                "var_issuer_name", var.issuer_name
               ),
-              "${issuer_kind}", var.issuer_kind
+              "var_issuer_kind", var.issuer_kind
             ),
-            "${grafana_enabled}", tostring(var.grafana_enabled)
+            "var_grafana_enabled", tostring(var.grafana_enabled)
           ),
-          "${grafana_ingress_enabled}", tostring(var.grafana_ingress_enabled)
+          "var_grafana_ingress_enabled", tostring(var.grafana_ingress_enabled)
         ),
-        "${whitelist_ips_string}", local.whitelist_ips_string
+        "var_whitelist_ips_string", local.whitelist_ips_string
       ),
-      "${config_secret}", var.config_secret
+      "var_config_secret", var.config_secret
     )
   )
   whitelist_ips_string = join(",", var.whitelist_ips)
