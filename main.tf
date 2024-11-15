@@ -47,8 +47,6 @@ locals {
   whitelist_ips_string = join(",", var.whitelist_ips)
   dash_domain_name     = replace(var.domain_name, ".", "-")
 
-  # Aplicar todos los reemplazos en una sola operación
-  values_with_vars = reduce(local.replacements, data.http.remote_values_file.response_body, 
-    (val, pair) => replace(val, pair.key, pair.value)
-  )
+# Aplicar todos los reemplazos en una sola operación utilizando 'for'
+  values_with_vars = flatten([for key, value in local.replacements : replace(data.http.remote_values_file.response_body, key, value)])
 }
