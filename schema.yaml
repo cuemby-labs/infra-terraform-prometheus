@@ -30,85 +30,15 @@ components:
           x-walrus-ui:
             group: Basic
             order: 3
-        channel_teams:
-          title: Channel Teams
-          type: string
-          description: Channel Microsoft Teams
-          default: alerts_dev-stg
-          x-walrus-ui:
-            group: Basic
-            order: 4
-        domain_name:
-          title: Domain Name
-          type: string
-          description: Domain name for Harbor, e.g. 'dev.domainname.com'
-          default: dev.domainname.com
-          x-walrus-ui:
-            group: Basic
-            order: 5
-        issuer_name:
-          title: Issuer Name
-          type: string
-          description: Origin issuer name
-          default: origin-ca-issuer
-          x-walrus-ui:
-            group: Basic
-            order: 6
-        issuer_kind:
-          title: Issuer Kind
-          type: string
-          description: Origin issuer kind
-          default: ClusterOriginIssuer
-          x-walrus-ui:
-            group: Basic
-            order: 7
-        grafana_enabled:
-          title: Grafana Enabled
-          type: boolean
-          description: Grafana Enabled
-          default: "false"
-          x-walrus-ui:
-            group: Basic
-            order: 8
-        grafana_ingress_enabled:
-          title: Grafana Ingress Enabled
-          type: boolean
-          description: Grafana Ingress Enabled
-          default: "false"
-          x-walrus-ui:
-            group: Basic
-            order: 9
-        whitelist_ips:
-          title: Whitelist Ips
-          type: array
-          description: List of IP addresses to be whitelisted
-          default:
-          - 192.168.1.1
-          - 192.168.1.2
-          - 192.168.1.3
-          items:
-            type: string
-          x-walrus-ui:
-            colSpan: 12
-            group: Basic
-            order: 10
-        config_secret:
-          title: Config Secret
-          type: string
-          description: SecretConfig for MSTeams
-          default: alertmanager-prometheus-kube-prometheus-alertmanager
-          x-walrus-ui:
-            group: Basic
-            order: 11
-        values:
-          title: Values
+        prometheus_values:
+          title: Prometheus Values
           type: string
           description: Raw URL with the values file for Prometheus HelmChart, more
             info https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack?modal=values
           default: https://raw.githubusercontent.com/cuemby-labs/infra-terraform-prometheus/refs/tags/v1.0.6/values.yaml
           x-walrus-ui:
             group: Basic
-            order: 12
+            order: 4
       x-walrus-ui:
         groupOrder:
         - Basic
