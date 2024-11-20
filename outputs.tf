@@ -1,4 +1,12 @@
 #
+# Prmetheus value yaml output
+#
+
+output "prometheus_yaml" {
+  value = data.http.prometheus_values.body
+}
+
+#
 # Walrus Contextual output
 #
 
