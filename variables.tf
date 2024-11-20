@@ -75,7 +75,7 @@ variable "chart_version" {
 variable "prometheus_values" {
   type        = string
   description = "Raw URL with the values file for Prometheus HelmChart, more info https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack?modal=values"
-  default     = "https://raw.githubusercontent.com/cuemby-labs/infra-terraform-prometheus/refs/tags/v1.0.6/values.yaml"
+  default     = "https://raw.githubusercontent.com/cuemby-labs/infra-terraform-prometheus/refs/tags/v1.0.7/values.yaml"
 }
 
 #
