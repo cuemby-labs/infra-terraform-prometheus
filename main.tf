@@ -14,6 +14,10 @@ resource "kubernetes_namespace" "prometheus_alert" {
   metadata {
     name = var.namespace_name
   }
+  
+  lifecycle {
+    ignore_changes = [metadata]
+  }
 }
 
 resource "helm_release" "kube_prometheus_alert" {
