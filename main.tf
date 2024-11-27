@@ -25,7 +25,7 @@ resource "helm_release" "kube_prometheus_alert" {
   version    = var.chart_version
 
   values = [
-    yamldecode(data.http.prometheus_values.body)
+    local.prometheus_values_encoded
   ]
 }
 
@@ -34,5 +34,7 @@ resource "helm_release" "kube_prometheus_alert" {
 #
 
 locals {
-  context          = var.context
+  context                   = var.context
+  prometheus_values_decoded = yamldecode(data.http.prometheus_values.body)
+  prometheus_values_encoded = jsonencode(local.prometheus_values_decoded)
 }
