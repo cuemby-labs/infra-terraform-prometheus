@@ -30,15 +30,24 @@ components:
           x-walrus-ui:
             group: Basic
             order: 3
-        prometheus_values:
-          title: Prometheus Values
-          type: string
-          description: Raw URL with the values file for Prometheus HelmChart, more
-            info https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack?modal=values
-          default: https://raw.githubusercontent.com/cuemby-labs/infra-terraform-prometheus/refs/tags/v1.0.7/values.yaml
+        set_custom_values:
+          title: Set Custom Values
+          type: boolean
+          description: Set custom values
+          default: false
           x-walrus-ui:
             group: Basic
             order: 4
+        values:
+          title: Values
+          type: object
+          description: Chart values for Prometheus HelmChart, more info https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack?modal=values
+          default: {}
+          x-walrus-ui:
+            colSpan: 12
+            group: Basic
+            order: 5
+            widget: YamlEditor
       x-walrus-ui:
         groupOrder:
         - Basic

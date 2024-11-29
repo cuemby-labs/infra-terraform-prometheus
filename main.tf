@@ -1,12 +1,4 @@
 #
-# install values
-#
-
-data "http" "prometheus_values" {
-  url = var.prometheus_values
-}
-
-#
 # Prometheus Resources
 #
 
@@ -29,7 +21,7 @@ resource "helm_release" "kube_prometheus_alert" {
   version    = var.chart_version
 
   values = [
-    local.prometheus_values_encoded
+    yamlencode(var.values),
   ]
 }
 
@@ -38,7 +30,5 @@ resource "helm_release" "kube_prometheus_alert" {
 #
 
 locals {
-  context                   = var.context
-  prometheus_values_decoded = yamldecode(data.http.prometheus_values.body)
-  prometheus_values_encoded = jsonencode(local.prometheus_values_decoded)
+  context = var.context
 }
