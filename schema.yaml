@@ -30,6 +30,24 @@ components:
           x-walrus-ui:
             group: Basic
             order: 3
+        username:
+          title: Username
+          type: string
+          description: The username for the secret.
+          default: ""
+          x-walrus-ui:
+            group: Basic
+            order: 4
+        password:
+          title: Password
+          type: string
+          description: The password for the secret.
+          default: ""
+          format: password
+          writeOnly: true
+          x-walrus-ui:
+            group: Basic
+            order: 5
         set_custom_values:
           title: Set Custom Values
           type: boolean
@@ -37,7 +55,7 @@ components:
           default: false
           x-walrus-ui:
             group: Basic
-            order: 4
+            order: 6
         values:
           title: Values
           type: object
@@ -46,7 +64,7 @@ components:
           x-walrus-ui:
             colSpan: 12
             group: Basic
-            order: 5
+            order: 7
             widget: YamlEditor
       x-walrus-ui:
         groupOrder:

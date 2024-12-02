@@ -20,6 +20,19 @@ variable "chart_version" {
   default     = "64.0.0"
 }
 
+variable "username" {
+  description = "The username for the secret."
+  type        = string
+  default     = ""
+}
+
+variable "password" {
+  description = "The password for the secret."
+  type        = string
+  sensitive   = true
+  default     = ""
+}
+
 variable "set_custom_values" {
   type = bool
   description = "Set custom values"
