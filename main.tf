@@ -42,51 +42,51 @@ resource "helm_release" "kube_prometheus_alert" {
 
   set {
     name  = "alertmanager.alertmanagerSpec.resources.requests.cpu"
-    value = var.alertmanager_resources["alertmanager"]["requests"]["cpu"]
+    value = var.resources["alertmanager"]["requests"]["cpu"]
   }
   set {
     name  = "alertmanager.alertmanagerSpec.resources.requests.memory"
-    value = var.alertmanager_resources["alertmanager"]["requests"]["memory"]
+    value = var.resources["alertmanager"]["requests"]["memory"]
   }
   set {
     name  = "alertmanager.alertmanagerSpec.resources.limits.cpu"
-    value = var.alertmanager_resources["alertmanager"]["limits"]["cpu"]
+    value = var.resources["alertmanager"]["limits"]["cpu"]
   }
   set {
     name  = "alertmanager.alertmanagerSpec.resources.limits.memory"
-    value = var.alertmanager_resources["alertmanager"]["limits"]["memory"]
+    value = var.resources["alertmanager"]["limits"]["memory"]
   }
   set {
     name  = "prometheusOperator.resources.requests.cpu"
-    value = var.alertmanager_resources["operator"]["requests"]["cpu"]
+    value = var.resources["operator"]["requests"]["cpu"]
   }
   set {
     name  = "prometheusOperator.resources.requests.memory"
-    value = var.alertmanager_resources["operator"]["requests"]["memory"]
+    value = var.resources["operator"]["requests"]["memory"]
   }
   set {
     name  = "prometheusOperator.resources.limits.cpu"
-    value = var.alertmanager_resources["operator"]["limits"]["cpu"]
+    value = var.resources["operator"]["limits"]["cpu"]
   }
   set {
     name  = "prometheusOperator.resources.limits.memory"
-    value = var.alertmanager_resources["operator"]["limits"]["memory"]
+    value = var.resources["operator"]["limits"]["memory"]
   }
   set {
     name  = "prometheus.prometheusSpec.resources.requests.cpu"
-    value = var.alertmanager_resources["prometheus"]["requests"]["cpu"]
+    value = var.resources["prometheus"]["requests"]["cpu"]
   }
   set {
     name  = "prometheus.prometheusSpec.resources.requests.memory"
-    value = var.alertmanager_resources["prometheus"]["requests"]["memory"]
+    value = var.resources["prometheus"]["requests"]["memory"]
   }
   set {
     name  = "prometheus.prometheusSpec.resources.limits.cpu"
-    value = var.alertmanager_resources["prometheus"]["limits"]["cpu"]
+    value = var.resources["prometheus"]["limits"]["cpu"]
   }
   set {
     name  = "prometheus.prometheusSpec.resources.limits.memory"
-    value = var.alertmanager_resources["prometheus"]["limits"]["memory"]
+    value = var.resources["prometheus"]["limits"]["memory"]
   }
 }
 
