@@ -2,14 +2,17 @@
 # Prometheus Resources
 #
 
-resource "kubernetes_namespace" "prometheus_alert" {
+data "kubernetes_namespace" "prometheus_system" {
   metadata {
     name = var.namespace_name
   }
-  
-  lifecycle {
-    ignore_changes = [metadata]
+}
+
+resource "kubernetes_namespace" "prometheus_system" {
+  metadata {
+    name = var.namespace_name
   }
+  count = length(data.kubernetes_namespace.prometheus_system.id) == 0 ? 1 : 0
 }
 
 resource "kubernetes_secret" "secret" {
@@ -25,9 +28,10 @@ resource "kubernetes_secret" "secret" {
 }
 
 resource "helm_release" "kube_prometheus_alert" {
+  depends_on = [kubernetes_namespace.prometheus_system]
+
   name       = var.release_name
   namespace  = var.namespace_name
-
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "kube-prometheus-stack"
   version    = var.chart_version
@@ -43,4 +47,10 @@ resource "helm_release" "kube_prometheus_alert" {
 
 locals {
   context = var.context
+}
+
+module "submodule" {
+  source = "./modules/submodule"
+
+  message = "Hello, submodule"
 }

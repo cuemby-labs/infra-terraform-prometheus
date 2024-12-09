@@ -31,3 +31,12 @@ output "walrus_resource_id" {
   value       = try(local.context["resource"]["id"], null)
   description = "The id of resource where deployed in Walrus."
 }
+
+#
+# Submodule output
+#
+
+output "submodule" {
+  value       = module.submodule.message
+  description = "The message from submodule."
+}
