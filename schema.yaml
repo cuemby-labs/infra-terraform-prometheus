@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: OpenAPI schema for Prometheus template .
+  title: OpenAPI schema for template .
 components:
   schemas:
     variables:
@@ -56,6 +56,84 @@ components:
           x-walrus-ui:
             group: Basic
             order: 6
+        resources:
+          title: Resources
+          type: object
+          description: Resource limits and requests for Prometheus Helm release.
+          default:
+            alertmanager:
+              limits:
+                cpu: 200m
+                memory: 800Mi
+              requests:
+                cpu: 100m
+                memory: 400Mi
+            operator:
+              limits:
+                cpu: 200m
+                memory: 200Mi
+              requests:
+                cpu: 100m
+                memory: 100Mi
+            prometheus:
+              limits:
+                cpu: 200m
+                memory: 800Mi
+              requests:
+                cpu: 100m
+                memory: 400Mi
+          additionalProperties:
+            properties:
+              limits:
+                properties:
+                  cpu:
+                    title: Cpu
+                    type: string
+                    x-walrus-ui:
+                      order: 1
+                  memory:
+                    title: Memory
+                    type: string
+                    x-walrus-ui:
+                      order: 2
+                required:
+                - cpu
+                - memory
+                title: Limits
+                type: object
+                x-walrus-ui:
+                  colSpan: 12
+                  order: 1
+              requests:
+                properties:
+                  cpu:
+                    title: Cpu
+                    type: string
+                    x-walrus-ui:
+                      order: 1
+                  memory:
+                    title: Memory
+                    type: string
+                    x-walrus-ui:
+                      order: 2
+                required:
+                - cpu
+                - memory
+                title: Requests
+                type: object
+                x-walrus-ui:
+                  colSpan: 12
+                  order: 2
+            required:
+            - limits
+            - requests
+            type: object
+            x-walrus-ui:
+              colSpan: 12
+          x-walrus-ui:
+            colSpan: 12
+            group: Basic
+            order: 7
         values:
           title: Values
           type: object
@@ -64,7 +142,7 @@ components:
           x-walrus-ui:
             colSpan: 12
             group: Basic
-            order: 7
+            order: 8
             widget: YamlEditor
       x-walrus-ui:
         groupOrder:
