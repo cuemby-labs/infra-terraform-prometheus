@@ -39,11 +39,59 @@ variable "set_custom_values" {
   default = false
 }
 
+variable "resources" {
+  description = "Resource limits and requests for Prometheus Helm release."
+  type        = map(object({
+    limits = object({
+      cpu    = string
+      memory = string
+    })
+    requests = object({
+      cpu    = string
+      memory = string
+    })
+  }))
+
+  default = {
+    alertmanager = {
+      limits = {
+        cpu    = "200m"
+        memory = "800Mi"
+      }
+      requests = {
+        cpu    = "100m"
+        memory = "400Mi"
+      }
+    }
+    operator = {
+      limits = {
+        cpu    = "200m"
+        memory = "200Mi"
+      }
+      requests = {
+        cpu    = "100m"
+        memory = "100Mi"
+      }
+    }
+    prometheus = {
+      limits = {
+        cpu    = "200m"
+        memory = "800Mi"
+      }
+      requests = {
+        cpu    = "100m"
+        memory = "400Mi"
+      }
+    }
+  }
+}
+
 variable "values" {
   type = any
   description = "Chart values for Prometheus HelmChart, more info https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack?modal=values"
   default = {}
 }
+
 
 #
 # Walrus Contextual Fields

@@ -39,6 +39,55 @@ resource "helm_release" "kube_prometheus_alert" {
   values = [
     yamlencode(var.values),
   ]
+
+  set {
+    name  = "alertmanager.alertmanagerSpec.resources.requests.cpu"
+    value = var.alertmanager_resources["alertmanager"]["requests"]["cpu"]
+  }
+  set {
+    name  = "alertmanager.alertmanagerSpec.resources.requests.memory"
+    value = var.alertmanager_resources["alertmanager"]["requests"]["memory"]
+  }
+  set {
+    name  = "alertmanager.alertmanagerSpec.resources.limits.cpu"
+    value = var.alertmanager_resources["alertmanager"]["limits"]["cpu"]
+  }
+  set {
+    name  = "alertmanager.alertmanagerSpec.resources.limits.memory"
+    value = var.alertmanager_resources["alertmanager"]["limits"]["memory"]
+  }
+  set {
+    name  = "prometheusOperator.resources.requests.cpu"
+    value = var.alertmanager_resources["operator"]["requests"]["cpu"]
+  }
+  set {
+    name  = "prometheusOperator.resources.requests.memory"
+    value = var.alertmanager_resources["operator"]["requests"]["memory"]
+  }
+  set {
+    name  = "prometheusOperator.resources.limits.cpu"
+    value = var.alertmanager_resources["operator"]["limits"]["cpu"]
+  }
+  set {
+    name  = "prometheusOperator.resources.limits.memory"
+    value = var.alertmanager_resources["operator"]["limits"]["memory"]
+  }
+  set {
+    name  = "prometheus.prometheusSpec.resources.requests.cpu"
+    value = var.alertmanager_resources["prometheus"]["requests"]["cpu"]
+  }
+  set {
+    name  = "prometheus.prometheusSpec.resources.requests.memory"
+    value = var.alertmanager_resources["prometheus"]["requests"]["memory"]
+  }
+  set {
+    name  = "prometheus.prometheusSpec.resources.limits.cpu"
+    value = var.alertmanager_resources["prometheus"]["limits"]["cpu"]
+  }
+  set {
+    name  = "prometheus.prometheusSpec.resources.limits.memory"
+    value = var.alertmanager_resources["prometheus"]["limits"]["memory"]
+  }
 }
 
 #

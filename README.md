@@ -11,7 +11,39 @@ module "prometheus" {
   namespace_name  = "origin-ca"                             # The namespace where Origin-CA will be created
   image_version   = "cloudflare/origin-ca-issuer:v0.9.0"    # origin-ca-issuer version.
   key             = "secret key for cloudflare"             # secret key for cloudflare
-  manifests_urls  = [url1, url2]                            # List of HTTP RAW URLs for kubernetes manifest
+
+  resources = {
+    alertmanager = {
+      limits = {
+        cpu    = "200m"
+        memory = "800Mi"
+      }
+      requests = {
+        cpu    = "100m"
+        memory = "400Mi"
+      }
+    }
+    operator = {
+      limits = {
+        cpu    = "200m"
+        memory = "200Mi"
+      }
+      requests = {
+        cpu    = "100m"
+        memory = "100Mi"
+      }
+    }
+    prometheus = {
+      limits = {
+        cpu    = "200m"
+        memory = "800Mi"
+      }
+      requests = {
+        cpu    = "100m"
+        memory = "400Mi"
+      }
+    }
+  }
 }
 ```
 
@@ -59,15 +91,8 @@ No modules.
 | <a name="input_namespace_name"></a> [namespace_name](#input_namespace_name) | Namespace where Prometheus will be installed. | string | "prometheus-system" | no |
 | <a name="input_release_name"></a> [release_name](#input_release_name) | The name of the Helm release. | string | "prometheus" | no |
 | <a name="input_chart_version"></a> [chart_version](#input_chart_version) | The version of the Prometheus Helm chart. | string | "64.0.0" | yes |
-| <a name="input_channel-teams"></a> [channel-teams](#input_channel-teams) | Channel Microsoft Teams. | string | "" | yes |
-| <a name="input_domain_name"></a> [domain_name](#input_domain_name) | Domain name for Harbor, e.g. 'dev.domainname.com'. | string | "dev.domainname.com" | no |
-| <a name="input_dash_domain_name"></a> [dash_domain_name](#input_dash_domain_name) | Domain name with dash, e.g. 'dev-domainname-com'. | string | "dev-domainname-com" | no |
-| <a name="input_issuer_name"></a> [issuer_name](#input_issuer_name) | Origin issuer name. | string | "origin-ca-issuer" | yes |
-| <a name="input_issuer_kind"></a> [issuer_kind](#input_issuer_kind) | Origin issuer kind. | string | "ClusterOriginIssuer" | no |
-| <a name="input_grafana_enabled"></a> [grafana_enabled](#input_grafana_enabled) | Grafana Enabled. | bool | "false" | no |
-| <a name="input_grafana_ingress_enabled"></a> [grafana_ingress_enabled](#input_grafana_ingress_enabled) | Grafana Ingress Enabled. | bool | "false" | no |
-| <a name="input_additional_prometheus_rules_map"></a> [additional_prometheus_rules_map](#input_additional_prometheus_rules_map) | additionalPrometheusRulesMap. | map(any) | "{}" | yes |
-| <a name="input_additional_scrape_configs"></a> [additional_scrape_configs](#input_additional_scrape_configs) | additionalScrapeConfigs. | map(string) | "{}" | no |
+| <a name="input_resources"></a> [resources](#input_resources) | Resource limits and requests for helm Chart pods. | `map(map(string))` | `"See example"` | no |
+| <a name="input_context"></a> [context](#input\_context) | Receive contextual information. When Walrus deploys, Walrus will inject specific contextual information into this field.<br><br>Examples:<pre>context:<br>  project:<br>    name: string<br>    id: string<br>  environment:<br>    name: string<br>    id: string<br>  resource:<br>    name: string<br>    id: string</pre> | `map(any)` | `{}` | no |
 
 ## Outputs
 
