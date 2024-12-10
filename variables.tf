@@ -22,7 +22,6 @@ variable "chart_version" {
 
 variable "secrets" {
   description = "List of secrets with username and password"
-  sensitive   = true
 
   type = list(object({
     username = string
