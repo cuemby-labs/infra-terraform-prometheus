@@ -15,15 +15,17 @@ resource "kubernetes_namespace" "prometheus_system" {
   count = length(data.kubernetes_namespace.prometheus_system.id) == 0 ? 1 : 0
 }
 
-resource "kubernetes_secret" "victoria_secret" {
+resource "kubernetes_secret" "secrets" {
+  for_each = { for secret in var.secrets : secret.username => secret }
+
   metadata {
-    name      = var.username
+    name      = each.value.username
     namespace = var.namespace_name
   }
 
   data = {
-    username = var.username
-    password = var.password
+    username = each.value.username
+    password = each.value.password
   }
 
   type = "kubernetes.io/basic-auth"

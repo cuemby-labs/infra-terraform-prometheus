@@ -30,24 +30,43 @@ components:
           x-walrus-ui:
             group: Basic
             order: 3
-        username:
-          title: Username
-          type: string
-          description: The username for the victoria secret.
-          default: ""
-          x-walrus-ui:
-            group: Basic
-            order: 4
-        password:
-          title: Password
-          type: string
-          description: The password for the victoria secret.
-          default: ""
-          format: password
+        secrets:
+          title: Secrets
+          type: array
+          description: List of secrets with username and password
+          default:
+          - password: password1
+            username: user1
+          - password: password2
+            username: user2
+          items:
+            properties:
+              password:
+                format: password
+                title: Password
+                type: string
+                writeOnly: true
+                x-walrus-ui:
+                  order: 2
+              username:
+                format: password
+                title: Username
+                type: string
+                writeOnly: true
+                x-walrus-ui:
+                  order: 1
+            required:
+            - password
+            - username
+            type: object
+            writeOnly: true
+            x-walrus-ui:
+              colSpan: 12
           writeOnly: true
           x-walrus-ui:
+            colSpan: 12
             group: Basic
-            order: 5
+            order: 4
         set_custom_values:
           title: Set Custom Values
           type: boolean
@@ -55,7 +74,7 @@ components:
           default: false
           x-walrus-ui:
             group: Basic
-            order: 6
+            order: 5
         resources:
           title: Resources
           type: object
@@ -133,7 +152,7 @@ components:
           x-walrus-ui:
             colSpan: 12
             group: Basic
-            order: 7
+            order: 6
         values:
           title: Values
           type: object
@@ -142,7 +161,7 @@ components:
           x-walrus-ui:
             colSpan: 12
             group: Basic
-            order: 8
+            order: 7
             widget: YamlEditor
       x-walrus-ui:
         groupOrder:

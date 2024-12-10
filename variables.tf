@@ -20,18 +20,27 @@ variable "chart_version" {
   default     = "64.0.0"
 }
 
-variable "username" {
-  description = "The username for the victoria secret."
-  type        = string
-  default     = ""
+variable "secrets" {
+  description = "List of secrets with username and password"
+  sensitive   = true
+
+  type = list(object({
+    username = string
+    password = string
+  }))
+
+  default = [
+    {
+      username = "user1"
+      password = "password1"
+    },
+    {
+      username = "user2"
+      password = "password2"
+    }
+  ]
 }
 
-variable "password" {
-  description = "The password for the victoria secret."
-  type        = string
-  sensitive   = true
-  default     = ""
-}
 
 variable "set_custom_values" {
   type = bool
