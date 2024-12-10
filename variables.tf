@@ -21,13 +21,13 @@ variable "chart_version" {
 }
 
 variable "username" {
-  description = "The username for the secret."
+  description = "The username for the victoria secret."
   type        = string
   default     = ""
 }
 
 variable "password" {
-  description = "The password for the secret."
+  description = "The password for the victoria secret."
   type        = string
   sensitive   = true
   default     = ""

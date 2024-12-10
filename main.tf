@@ -15,16 +15,18 @@ resource "kubernetes_namespace" "prometheus_system" {
   count = length(data.kubernetes_namespace.prometheus_system.id) == 0 ? 1 : 0
 }
 
-resource "kubernetes_secret" "secret" {
+resource "kubernetes_secret" "victoria_secret" {
   metadata {
     name      = var.username
     namespace = var.namespace_name
   }
 
   data = {
-    username = base64encode(var.username)  # Encode username in base64
-    password = base64encode(var.password)  # Encode password in base64
+    username = var.username
+    password = var.password
   }
+
+  type = "kubernetes.io/basic-auth"
 }
 
 resource "helm_release" "kube_prometheus_alert" {
