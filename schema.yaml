@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: OpenAPI schema for Prometheus template .
+  title: OpenAPI schema for template .
 components:
   schemas:
     variables:
