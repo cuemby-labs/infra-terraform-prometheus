@@ -40,12 +40,7 @@ resource "helm_release" "kube_prometheus_alert" {
   chart      = "kube-prometheus-stack"
   version    = var.chart_version
 
-  dynamic "values" {
-    for_each = var.set_custom_values ? [1] : []
-    content {
-      value = yamlencode(var.values)
-    }
-  }
+  values = var.set_custom_values ? [yamlencode(var.values)] : []
 
   set {
     name  = "alertmanager.alertmanagerSpec.resources.requests.cpu"
