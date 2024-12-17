@@ -40,9 +40,12 @@ resource "helm_release" "kube_prometheus_alert" {
   chart      = "kube-prometheus-stack"
   version    = var.chart_version
 
-  values = [
-    yamlencode(var.values),
-  ]
+  dynamic "values" {
+    for_each = var.set_custom_values ? [1] : []
+    content {
+      value = yamlencode(var.values)
+    }
+  }
 
   set {
     name  = "alertmanager.alertmanagerSpec.resources.requests.cpu"
@@ -92,6 +95,36 @@ resource "helm_release" "kube_prometheus_alert" {
     name  = "prometheus.prometheusSpec.resources.limits.memory"
     value = var.resources["prometheus"]["limits"]["memory"]
   }
+}
+
+#
+# HPA
+#
+
+data "template_file" "hpa_manifest_template" {
+  
+  template = file("${path.module}/hpa.yaml.tpl")
+  vars     = {
+    namespace_name            = var.namespace_name,
+    operator_name_metadata    = "${helm_release.kube_prometheus_alert.name}-kube-operator",
+    operator_name_deployment  = "${helm_release.kube_prometheus_alert.name}-kube-prometheus-operator",
+    metrics_name_metadata     = "${helm_release.kube_prometheus_alert.name}-kube-state-metrics",
+    metrics_name_deployment   = "${helm_release.kube_prometheus_alert.name}-kube-state-metrics",
+    min_replicas              = var.hpa_config.min_replicas,
+    max_replicas              = var.hpa_config.max_replicas,
+    target_cpu_utilization    = var.hpa_config.target_cpu_utilization,
+    target_memory_utilization = var.hpa_config.target_memory_utilization
+  }
+}
+
+data "kubectl_file_documents" "hpa_manifest_files" {
+
+  content = data.template_file.hpa_manifest_template.rendered
+}
+
+resource "kubectl_manifest" "apply_hpa_manifests" {
+  for_each  = data.kubectl_file_documents.hpa_manifest_files.manifests
+  yaml_body = each.value
 }
 
 #

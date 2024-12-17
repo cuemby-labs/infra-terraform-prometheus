@@ -42,27 +42,21 @@ components:
           items:
             properties:
               password:
-                format: password
                 title: Password
                 type: string
-                writeOnly: true
                 x-walrus-ui:
                   order: 2
               username:
-                format: password
                 title: Username
                 type: string
-                writeOnly: true
                 x-walrus-ui:
                   order: 1
             required:
             - password
             - username
             type: object
-            writeOnly: true
             x-walrus-ui:
               colSpan: 12
-          writeOnly: true
           x-walrus-ui:
             colSpan: 12
             group: Basic
@@ -163,6 +157,45 @@ components:
             group: Basic
             order: 7
             widget: YamlEditor
+        hpa_config:
+          title: Hpa Config
+          type: object
+          description: Configuration for the HPA targeting Prometheus Deployment
+          default:
+            max_replicas: 3
+            min_replicas: 1
+            target_cpu_utilization: 80
+            target_memory_utilization: 80
+          required:
+          - max_replicas
+          - min_replicas
+          - target_cpu_utilization
+          - target_memory_utilization
+          properties:
+            max_replicas:
+              title: Max Replicas
+              type: number
+              x-walrus-ui:
+                order: 2
+            min_replicas:
+              title: Min Replicas
+              type: number
+              x-walrus-ui:
+                order: 1
+            target_cpu_utilization:
+              title: Target Cpu Utilization
+              type: number
+              x-walrus-ui:
+                order: 3
+            target_memory_utilization:
+              title: Target Memory Utilization
+              type: number
+              x-walrus-ui:
+                order: 4
+          x-walrus-ui:
+            colSpan: 12
+            group: Basic
+            order: 8
       x-walrus-ui:
         groupOrder:
         - Basic
